@@ -54,7 +54,7 @@
 		
 		<div class="mb-3">
 			<label for="confirm_password" class="form-label">Confirm Password</label> <input
-				type="password" name="confirm_password" value="${confirmPassword}"
+				type="password" name="confirm_password" value="${confirm_password}"
 				class="form-control ${empty confirm_password_err ? '' : 'is-invalid'}"
 				id="confirm_password">
 			<div class="invalid-feedback">

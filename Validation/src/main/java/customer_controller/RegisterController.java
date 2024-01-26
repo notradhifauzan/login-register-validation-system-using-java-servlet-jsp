@@ -59,6 +59,7 @@ public class RegisterController extends HttpServlet {
 		String password = request.getParameter("password");
 		String confirmPassword = request.getParameter("confirm_password");
 
+		// initially all errors are empty
 		initializeRegisterForm(request, username, email, phone, address, password, confirmPassword);
 
 		try {
@@ -68,12 +69,17 @@ public class RegisterController extends HttpServlet {
 						&& !password.isEmpty() && !confirmPassword.isEmpty()) {
 					// all fields are filled
 					
-					// 1. check if valid username
-					request.setAttribute("username_err",
-							FieldValidator.validateUsername(username) ? "" : "not a valid username");
+					if(FieldValidator.validateUsername(username)) {
+						// if username is valid
+						// then check if it already exist
+						if(custRepo.isUsernameExist(username)) {
+							request.setAttribute("username_err","username already taken");
+						}
+					} else {
+						// username is not valid
+						request.setAttribute("username_err","not a valid username");
+					}
 					
-					// 2. check if username is already taken
-					request.setAttribute("username_err", custRepo.isUsernameExist(username) ? "username already taken" : "");
 					
 					// 3. check if valid email
 					request.setAttribute("email_err", FieldValidator.validateEmail(email) ? "" : "not a valid email");
@@ -82,7 +88,7 @@ public class RegisterController extends HttpServlet {
 					request.setAttribute("phone_err", FieldValidator.validatePhone(phone) ? "" : "not a valid phone number");
 					
 					// 5. check if valid password
-					request.setAttribute("password_err", FieldValidator.validatePassword(password) ? "" : "not a valid password");
+					request.setAttribute("password_err", FieldValidator.validatePassword(password) ? "" : "Pasword should at least have 1 lowercase character, 1 uppercase character, 1 special character, 1 digit and more than 8 characters long");
 
 					// 6. check if password and confirmPassword is match
 					request.setAttribute("confirm_password_err", password.equals(confirmPassword) ? "" : "password does not match");
