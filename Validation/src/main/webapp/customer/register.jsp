@@ -26,7 +26,7 @@
 		
 		<div class="mb-3">
 			<label for="phone" class="form-label">Phone</label> <input
-				type="email" name="phone" value="${phone}"
+				type="text" name="phone" value="${phone}"
 				class="form-control ${empty phone_err ? '' : 'is-invalid'}"
 				id="phone">
 			<div class="invalid-feedback">
