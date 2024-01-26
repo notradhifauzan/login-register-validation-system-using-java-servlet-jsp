@@ -15,6 +15,12 @@ public class CustomerRepo {
 	}
 
 	public boolean isUsernameExist(String username) {
+		/*
+		 * you can use your DAO here
+		 * 
+		 * ex: custDAO.isUsernameExist(username);
+		 * 
+		 * */
 		return custDetails.containsKey(username);
 	}
 
